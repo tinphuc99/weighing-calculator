@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy Tính Cân</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.4em;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+            text-align: center;
+            background: #f8f9fa;
+        }
+
+        .input-field:focus {
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.4em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        .result-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .result-item {
+            margin-bottom: 15px;
+        }
+
+        .result-label {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .total-section {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .total-label {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .total-value {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            color: white;
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .status-message {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .history-section {
+            margin-top: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .history-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #555;
+            text-align: center;
+        }
+
+        .history-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-details {
+            flex: 1;
+        }
+
+        .history-amount {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .input-field {
+                font-size: 1.2em;
+                padding: 15px;
+            }
+            
+            .calculate-btn {
+                font-size: 1.2em;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏪 Máy Tính Cân</h1>
+            <p>Dành cho người lớn tuổi - Đơn giản & Dễ dùng</p>
+        </div>
+
+        <form id="calculatorForm">
+            <div class="input-group">
+                <label for="unitPrice">💰 Đơn giá (nghìn đồng/kg):</label>
+                <input type="number" id="unitPrice" class="input-field" placeholder="Nhập đơn giá..." step="0.1" required>
+            </div>
+
+            <div class="input-group">
+                <label for="weight">⚖️ Số cân (kg):</label>
+                <input type="number" id="weight" class="input-field" placeholder="Nhập số cân..." step="0.01" required>
+            </div>
+
+            <button type="submit" class="calculate-btn">
+                🧮 TÍNH TIỀN
+            </button>
+        </form>
+
+        <div id="resultSection" class="result-section" style="display: none;">
+            <div class="result-item">
+                <div class="result-label">Thành tiền:</div>
+                <div id="currentAmount" class="result-value">0 đ</div>
+            </div>
+        </div>
+
+        <div class="total-section">
+            <div class="total-label">📊 Tổng cộng tất cả</div>
+            <div id="totalAmount" class="total-value">0 đ</div>
+        </div>
+
+        <div class="action-buttons">
+            <button id="saveBtn" class="action-btn save-btn">
+                💾 LUU VÀO GOOGLE SHEET
+            </button>
+            <button id="resetBtn" class="action-btn reset-btn">
+                🔄 XÓA TỔNG
+            </button>
+        </div>
+
+        <div id="statusMessage" class="status-message"></div>
+
+        <div class="history-section">
+            <div class="history-title">📋 Lịch sử gần đây</div>
+            <div id="historyList">
+                <p style="text-align: center; color: #666;">Chưa có dữ liệu</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cấu hình Google Apps Script Web App URL
+        // THAY ĐỔI URL NÀY BẰNG URL GOOGLE APPS SCRIPT CỦA BẠN
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
+        let totalAmount = 0;
+        let currentCalculation = null;
+        let history = [];
+
+        // Load dữ liệu từ localStorage
+        function loadData() {
+            const savedTotal = localStorage.getItem('totalAmount');
+            const savedHistory = localStorage.getItem('calculationHistory');
+            
+            if (savedTotal) {
+                totalAmount = parseFloat(savedTotal);
+                updateTotalDisplay();
+            }
+            
+            if (savedHistory) {
+                history = JSON.parse(savedHistory);
+                updateHistoryDisplay();
+            }
+        }
+
+        // Lưu dữ liệu vào localStorage
+        function saveData() {
+            localStorage.setItem('totalAmount', totalAmount.toString());
+            localStorage.setItem('calculationHistory', JSON.stringify(history));
+        }
+
+        // Định dạng số tiền
+        function formatMoney(amount) {
+            return new Intl.NumberFormat('vi-VN').format(amount) + ' đ';
+        }
+
+        // Định dạng ngày giờ
+        function formatDateTime(date) {
+            return date.toLocaleString('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Cập nhật hiển thị tổng tiền
+        function updateTotalDisplay() {
+            document.getElementById('totalAmount').textContent = formatMoney(totalAmount);
+        }
+
+        // Cập nhật hiển thị lịch sử
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('historyList');
+            
+            if (history.length === 0) {
+                historyList.innerHTML = '<p style="text-align: center; color: #666;">Chưa có dữ liệu</p>';
+                return;
+            }
+
+            historyList.innerHTML = history.slice(-5).reverse().map(item => `
+                <div class="history-item">
+                    <div class="history-details">
+                        <div>${formatDateTime(new Date(item.date))}</div>
+                        <div>${item.unitPrice}k đ/kg × ${item.weight}kg</div>
+                    </div>
+                    <div class="history-amount">${formatMoney(item.amount * 1000)}</div>
+                </div>
+            `).join('');
+        }
+
+        // Hiển thị thông báo
+        function showMessage(message, type) {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message status-${type}`;
+            statusMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        // Tính toán
+        document.getElementById('calculatorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const unitPrice = parseFloat(document.getElementById('unitPrice').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            
+            if (!unitPrice || !weight) {
+                showMessage('Vui lòng nhập đầy đủ thông tin!', 'error');
+                return;
+            }
+
+            const amount = unitPrice * weight;
+            
+            currentCalculation = {
+                date: new Date().toISOString(),
+                unitPrice: unitPrice,
+                weight: weight,
+                amount: amount
+            };
+
+            // Hiển thị kết quả
+            document.getElementById('currentAmount').textContent = formatMoney(amount * 1000);
+            document.getElementById('resultSection').style.display = 'block';
+            
+            // Cộng vào tổng
+            totalAmount += amount * 1000;
+            updateTotalDisplay();
+            
+            // Thêm vào lịch sử
+            history.push(currentCalculation);
+            updateHistoryDisplay();
+            
+            // Lưu dữ liệu
+            saveData();
+            
+            showMessage('Đã tính toán thành công!', 'success');
+            
+            // Reset form
+            document.getElementById('calculatorForm').reset();
+        });
+
+        // Lưu vào Google Sheet
+        document.getElementById('saveBtn').addEventListener('click', async function() {
+            if (!currentCalculation) {
+                showMessage('Chưa có dữ liệu để lưu. Vui lòng tính toán trước!', 'error');
+                return;
+            }
+
+            this.textContent = '⏳ Đang lưu...';
+            this.disabled = true;
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        date: formatDateTime(new Date(currentCalculation.date)),
+                        unitPrice: currentCalculation.unitPrice,
+                        weight: currentCalculation.weight,
+                        amount: currentCalculation.amount
+                    })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        showMessage('✅ Đã lưu vào Google Sheet thành công!', 'success');
+                        currentCalculation = null; // Reset sau khi lưu thành công
+                    } else {
+                        throw new Error(result.error || 'Lỗi không xác định');
+                    }
+                } else {
+                    throw new Error('Lỗi kết nối server');
+                }
+            } catch (error) {
+                console.error('Lỗi:', error);
+                showMessage('❌ Lỗi: ' + error.message + '. Vui lòng kiểm tra cấu hình!', 'error');
+            } finally {
+                this.textContent = '💾 LUU VÀO GOOGLE SHEET';
+                this.disabled = false;
+            }
+        });
+
+        // Reset tổng tiền
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            if (confirm('Bạn có chắc muốn xóa tất cả dữ liệu?')) {
+                totalAmount = 0;
+                history = [];
+                currentCalculation = null;
+                
+                updateTotalDisplay();
+                updateHistoryDisplay();
+                document.getElementById('resultSection').style.display = 'none';
+                
+                // Xóa localStorage
+                localStorage.removeItem('totalAmount');
+                localStorage.removeItem('calculationHistory');
+                
+                showMessage('Đã xóa tất cả dữ liệu!', 'success');
+            }
+        });
+
+        // Khởi tạo
+        loadData();
+    </script>
+</body>
+</html>
