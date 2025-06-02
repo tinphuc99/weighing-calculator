@@ -1,670 +1,906 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý Cân Dưa Chuột</title>
-    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiUXXhuqNuIGzDvSBD4bqpbiBExrDhurdhdSBDaHXhu5F0Iiwic2hvcnRfbmFtZSI6IkPDom4gRMaw4bqwIiwic3RhcnRfdXJsIjoiLyIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmZmZmZmYiLCJ0aGVtZV9jb2xvciI6IiMxMGI5ODEiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M00zUXZNakF3TUM5emRtY2lJSGRwWkhSb1BTSXhNakFpSUdobGFXZG9kRDBpTVRJd0lpQjJhV1YzUW05NE1Ua3VOaUEyTGpVZ01UUkJNeUIzSU1NeUIzTUNrMFlqdHpOM2o3ZmpKeE1tNWpNVzE0TmpJNE5EbGlUWFpuTmprMElTSStJRU4xWTNWdFltVnlJRGt6SWdwZ0lEeHpjbU5nUFNKMmVqQTdPa3BvTjNRNFgxZFNQa3BWZFEiLCJzaXplcyI6IjE5Mng5NiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
-    <meta name="theme-color" content="#10b981">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Theo dõi dưa chuột</title>
+    <link rel="manifest" href="#" id="manifest-placeholder">
+    <meta name="theme-color" content="#4CAF50">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
+            padding: 20px;
         }
-
+        
         .container {
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
         }
-
+        
         .header {
-            text-align: center;
-            margin-bottom: 30px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
             color: white;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .status-bar {
-            background: rgba(255,255,255,0.1);
-            padding: 10px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-            color: white;
-            backdrop-filter: blur(10px);
-        }
-
-        .card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #374151;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #10b981;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #6366f1, #4f46e5);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
-        }
-
-        .result {
-            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
             padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
             text-align: center;
         }
-
-        .result-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #059669;
-            margin-bottom: 5px;
-        }
-
-        .tabs {
+        
+        .nav-tabs {
             display: flex;
-            margin-bottom: 20px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 5px;
+            background: #f5f5f5;
         }
-
-        .tab {
+        
+        .nav-tab {
             flex: 1;
-            padding: 12px;
+            padding: 12px 8px;
             text-align: center;
-            border-radius: 10px;
             cursor: pointer;
-            color: white;
-            transition: all 0.3s ease;
+            border: none;
+            background: transparent;
+            transition: all 0.3s;
+            font-size: 14px;
         }
-
-        .tab.active {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
+        
+        .nav-tab.active {
+            background: white;
+            color: #4CAF50;
+            font-weight: bold;
         }
-
+        
         .tab-content {
             display: none;
+            padding: 20px;
         }
-
+        
         .tab-content.active {
             display: block;
         }
-
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: #f9fafb;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            transition: all 0.3s ease;
+        
+        .form-group {
+            margin-bottom: 15px;
         }
-
-        .history-item:hover {
-            background: #f3f4f6;
-            transform: translateX(5px);
-        }
-
-        .history-date {
-            font-weight: 600;
-            color: #374151;
-        }
-
-        .history-details {
-            text-align: right;
-        }
-
-        .history-weight {
-            color: #6b7280;
-            font-size: 0.9rem;
-        }
-
-        .history-value {
-            color: #059669;
-            font-weight: 600;
-        }
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .summary-card {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        .summary-value {
-            font-size: 2rem;
-            font-weight: bold;
+        
+        label {
+            display: block;
             margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
         }
-
-        .summary-label {
-            opacity: 0.9;
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
         }
-
-        .offline-badge {
-            background: #ef4444;
+        
+        input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
             color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            animation: pulse 2s infinite;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.2s;
+            width: 100%;
+            margin: 10px 0;
         }
-
-        .online-badge {
-            background: #10b981;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+        
+        .btn:hover {
+            transform: translateY(-2px);
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .loading {
-            display: none;
+        
+        .result {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
             text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .history-item {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .summary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
             padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
         }
-
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #10b981;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
+        
+        .chart-container {
+            margin: 20px 0;
+            height: 300px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        .offline-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #ff9800;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: none;
         }
-
-        @media (max-width: 768px) {
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
             .container {
-                padding: 15px;
-            }
-
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .card {
-                padding: 20px;
-            }
-
-            .summary-grid {
-                grid-template-columns: 1fr;
+                border-radius: 10px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="offline-indicator" id="offlineIndicator">
+        📡 Chế độ offline
+    </div>
+    
     <div class="container">
         <div class="header">
-            <h1>🥒 Quản lý Cân Dưa Chuột</h1>
-            <div class="status-bar">
-                <span id="connectionStatus" class="online-badge">Đã kết nối</span>
-                <span id="lastSync">Đồng bộ: Chưa có</span>
-            </div>
+            <h1>🥒 Theo dõi dưa chuột</h1>
+            <p>Ứng dụng quản lý hàng ngày</p>
         </div>
-
-        <div class="tabs">
-            <div class="tab active" onclick="switchTab('input')">Nhập liệu</div>
-            <div class="tab" onclick="switchTab('history')">Lịch sử</div>
-            <div class="tab" onclick="switchTab('summary')">Tổng hợp</div>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('input')">Nhập liệu</button>
+            <button class="nav-tab" onclick="switchTab('history')">Lịch sử</button>
+            <button class="nav-tab" onclick="switchTab('summary')">Thống kê</button>
+            <button class="nav-tab" onclick="switchTab('data')">Dữ liệu</button>
+            <button class="nav-tab" onclick="switchTab('settings')">Cài đặt</button>
         </div>
-
-        <!-- Tab Nhập liệu -->
-        <div id="inputTab" class="tab-content active">
-            <div class="card">
-                <form id="cucumberForm">
-                    <div class="form-group">
-                        <label for="weight">Số kg dưa chuột:</label>
-                        <input type="number" id="weight" step="0.1" min="0" placeholder="Nhập số kg..." required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="price">Giá/kg (VNĐ):</label>
-                        <input type="number" id="price" step="1000" min="0" placeholder="Nhập giá..." required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="date">Ngày:</label>
-                        <input type="date" id="date" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="note">Ghi chú (tùy chọn):</label>
-                        <input type="text" id="note" placeholder="Ghi chú...">
-                    </div>
-                    
-                    <button type="button" class="btn btn-primary" onclick="calculateValue()">
-                        🧮 Tính toán
-                    </button>
-                </form>
-                
-                <div id="result" class="result" style="display: none;">
-                    <div class="result-value" id="resultValue">0 VNĐ</div>
-                    <div>Thành tiền</div>
-                    <button type="button" class="btn btn-secondary" onclick="saveData()" style="margin-top: 15px;">
-                        💾 Lưu dữ liệu
-                    </button>
+        
+        <!-- Tab nhập liệu -->
+        <div class="tab-content active" id="input-tab">
+            <form id="cucumberForm">
+                <div class="form-group">
+                    <label for="weight">Số kg dưa chuột:</label>
+                    <input type="number" id="weight" step="0.1" min="0" required>
                 </div>
                 
-                <div id="loading" class="loading">
-                    <div class="spinner"></div>
-                    <div>Đang lưu dữ liệu...</div>
+                <div class="form-group">
+                    <label for="price">Giá dưa chuột hôm nay (VNĐ/kg):</label>
+                    <input type="number" id="price" min="0" required>
+                </div>
+                
+                <button type="button" class="btn" onclick="calculateValue()">Tính toán</button>
+                
+                <div id="result" class="result" style="display: none;"></div>
+                
+                <button type="button" class="btn" onclick="saveData()" id="saveBtn" style="display: none;">
+                    Lưu vào Google Sheets
+                </button>
+                
+                <div class="form-group">
+                    <label for="notes">Ghi chú (tùy chọn):</label>
+                    <input type="text" id="notes" placeholder="Ghi chú thêm...">
+                </div>
+            </form>
+            
+            <div id="status"></div>
+        </div>
+        
+        <!-- Tab lịch sử -->
+        <div class="tab-content" id="history-tab">
+            <h3>Lịch sử giao dịch</h3>
+            <div id="historyList"></div>
+            <button class="btn" onclick="syncData()">🔄 Đồng bộ dữ liệu</button>
+        </div>
+        
+        <!-- Tab thống kê -->
+        <div class="tab-content" id="summary-tab">
+            <h3>Thống kê tổng hợp</h3>
+            <div id="summaryContent">
+                <div class="summary">
+                    <h4>Tháng này</h4>
+                    <p>Tổng kg: <span id="monthlyKg">0</span> kg</p>
+                    <p>Tổng tiền: <span id="monthlyMoney">0</span> VNĐ</p>
+                </div>
+                
+                <div class="chart-container">
+                    <p>📊 Biểu đồ xu hướng sẽ được hiển thị ở đây</p>
                 </div>
             </div>
         </div>
-
-        <!-- Tab Lịch sử -->
-        <div id="historyTab" class="tab-content">
-            <div class="card">
-                <h3>Lịch sử nhập liệu</h3>
-                <div id="historyList">
-                    <p style="text-align: center; color: #6b7280; padding: 20px;">
-                        Chưa có dữ liệu nào
-                    </p>
+        
+        <!-- Tab dữ liệu -->
+        <div class="tab-content" id="data-tab">
+            <h3>Quản lý dữ liệu</h3>
+            
+            <div class="form-group">
+                <h4>📊 Tổng quan dữ liệu</h4>
+                <div class="summary">
+                    <p>Tổng số bản ghi: <span id="totalRecords">0</span></p>
+                    <p>Tổng kg đã bán: <span id="totalKg">0</span> kg</p>
+                    <p>Tổng doanh thu: <span id="totalRevenue">0</span> VNĐ</p>
+                    <p>Giá trung bình: <span id="avgPrice">0</span> VNĐ/kg</p>
                 </div>
             </div>
+            
+            <div class="form-group">
+                <h4>📤 Xuất dữ liệu</h4>
+                <button class="btn" onclick="exportToCSV()">📄 Xuất CSV</button>
+                <button class="btn" onclick="exportToJSON()">📋 Xuất JSON</button>
+            </div>
+            
+            <div class="form-group">
+                <h4>📥 Nhập dữ liệu</h4>
+                <input type="file" id="importFile" accept=".json,.csv" style="margin-bottom: 10px;">
+                <button class="btn" onclick="importData()">📥 Nhập dữ liệu</button>
+            </div>
+            
+            <div class="form-group">
+                <h4>🗑️ Xóa dữ liệu</h4>
+                <button class="btn" onclick="clearAllData()" style="background: #f44336;">
+                    ⚠️ Xóa tất cả dữ liệu
+                </button>
+            </div>
+            
+            <div class="form-group">
+                <h4>📋 Dữ liệu chi tiết (JSON)</h4>
+                <textarea id="rawDataView" rows="10" style="width: 100%; font-family: monospace; font-size: 12px;" readonly></textarea>
+            </div>
         </div>
-
-        <!-- Tab Tổng hợp -->
-        <div id="summaryTab" class="tab-content">
-            <div class="card">
-                <h3>Tổng hợp tháng này</h3>
-                <div class="summary-grid">
-                    <div class="summary-card">
-                        <div class="summary-value" id="totalWeight">0</div>
-                        <div class="summary-label">Tổng kg</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-value" id="totalValue">0</div>
-                        <div class="summary-label">Tổng tiền (VNĐ)</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-value" id="avgPrice">0</div>
-                        <div class="summary-label">Giá TB (VNĐ/kg)</div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-value" id="totalDays">0</div>
-                        <div class="summary-label">Số ngày</div>
-                    </div>
+        
+        <!-- Tab cài đặt -->
+        <div class="tab-content" id="settings-tab">
+            <h3>⚙️ Cài đặt</h3>
+            
+            <div class="form-group">
+                <h4>🔗 Kết nối Google Sheets</h4>
+                <label for="googleScriptUrl">URL Google Apps Script:</label>
+                <input type="url" id="googleScriptUrl" placeholder="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec">
+                <button class="btn" onclick="saveSettings()">💾 Lưu cài đặt</button>
+                <button class="btn" onclick="testConnection()">🔄 Test kết nối</button>
+            </div>
+            
+            <div class="form-group">
+                <h4>📋 Hướng dẫn setup Google Apps Script</h4>
+                <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; font-size: 14px;">
+                    <p><strong>1. Tạo Google Sheet mới</strong></p>
+                    <p><strong>2. Vào Extensions → Apps Script</strong></p>
+                    <p><strong>3. Dán code sau vào:</strong></p>
+                    <pre style="background: #eee; padding: 10px; border-radius: 5px; overflow-x: auto;">function doPost(e) {
+  const sheet = SpreadsheetApp.getActiveSheet();
+  const params = e.parameter;
+  
+  // Thêm header nếu sheet trống
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(['Ngày', 'Số kg', 'Giá/kg', 'Thành tiền', 'Ghi chú']);
+  }
+  
+  sheet.appendRow([
+    params.date,
+    parseFloat(params.weight),
+    parseFloat(params.price),
+    parseFloat(params.total),
+    params.notes || ''
+  ]);
+  
+  return ContentService
+    .createTextOutput(JSON.stringify({success: true}))
+    .setMimeType(ContentService.MimeType.JSON);
+}</pre>
+                    <p><strong>4. Save → Deploy → New deployment</strong></p>
+                    <p><strong>5. Type: Web app, Access: Anyone</strong></p>
+                    <p><strong>6. Copy URL và dán vào ô trên</strong></p>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <h4>📱 Cài đặt ứng dụng</h4>
+                <div class="summary">
+                    <p>🔋 Trạng thái: <span id="connectionStatus">Offline</span></p>
+                    <p>💾 Dữ liệu offline: <span id="offlineCount">0</span> bản ghi</p>
+                    <p>📱 PWA: <span id="pwaStatus">Sẵn sàng cài đặt</span></p>
+                </div>
+                <button class="btn" id="installBtn" onclick="installPWA()" style="display: none;">
+                    📱 Cài đặt ứng dụng
+                </button>
+            </div>
+            
+            <div class="form-group">
+                <h4>ℹ️ Thông tin ứng dụng</h4>
+                <div style="background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                    <p><strong>Phiên bản:</strong> 1.0.0</p>
+                    <p><strong>Cập nhật:</strong> June 2025</p>
+                    <p><strong>Tính năng:</strong> PWA, Offline, Sync</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // PWA và Service Worker
+        // Cấu hình ứng dụng
+        const CONFIG = {
+            GOOGLE_SCRIPT_URL: localStorage.getItem('googleScriptUrl') || '',
+            STORAGE_KEY: 'cucumber_data',
+            SETTINGS_KEY: 'cucumber_settings'
+        };
+
+        // Khởi tạo ứng dụng
+        let currentData = {
+            weight: 0,
+            price: 0,
+            total: 0,
+            notes: ''
+        };
+
+        // Service Worker registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                const swCode = `
-                    const CACHE_NAME = 'cucumber-app-v1';
-                    const urlsToCache = [
-                        '/',
-                        '/manifest.json'
-                    ];
-
-                    self.addEventListener('install', event => {
-                        event.waitUntil(
-                            caches.open(CACHE_NAME)
-                                .then(cache => cache.addAll(urlsToCache))
-                        );
-                    });
-
-                    self.addEventListener('fetch', event => {
-                        event.respondWith(
-                            caches.match(event.request)
-                                .then(response => {
-                                    if (response) {
-                                        return response;
-                                    }
-                                    return fetch(event.request);
-                                })
-                        );
-                    });
-                `;
-                
-                const blob = new Blob([swCode], { type: 'application/javascript' });
-                const swUrl = URL.createObjectURL(blob);
-                
-                navigator.serviceWorker.register(swUrl)
-                    .then(registration => console.log('SW registered'))
-                    .catch(error => console.log('SW registration failed'));
+                registerServiceWorker();
             });
         }
 
-        // Khởi tạo
-        let currentData = [];
-        let isOnline = navigator.onLine;
-        
-        // Thiết lập ngày hiện tại
-        document.getElementById('date').valueAsDate = new Date();
-        
-        // Cập nhật trạng thái kết nối
-        function updateConnectionStatus() {
-            const statusEl = document.getElementById('connectionStatus');
-            if (isOnline) {
-                statusEl.className = 'online-badge';
-                statusEl.textContent = 'Đã kết nối';
-            } else {
-                statusEl.className = 'offline-badge';
-                statusEl.textContent = 'Offline';
-            }
+        function registerServiceWorker() {
+            // Tạo service worker inline
+            const swCode = `
+                const CACHE_NAME = 'cucumber-tracker-v1';
+                const urlsToCache = [
+                    '/',
+                    '/index.html'
+                ];
+
+                self.addEventListener('install', event => {
+                    event.waitUntil(
+                        caches.open(CACHE_NAME)
+                            .then(cache => cache.addAll(urlsToCache))
+                    );
+                });
+
+                self.addEventListener('fetch', event => {
+                    event.respondWith(
+                        caches.match(event.request)
+                            .then(response => {
+                                if (response) {
+                                    return response;
+                                }
+                                return fetch(event.request);
+                            })
+                    );
+                });
+            `;
+
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+
+            navigator.serviceWorker.register(swUrl)
+                .then(registration => {
+                    console.log('SW registered: ', registration);
+                })
+                .catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
+                });
         }
 
-        // Lắng nghe thay đổi kết nối
-        window.addEventListener('online', () => {
-            isOnline = true;
-            updateConnectionStatus();
-            syncOfflineData();
-        });
+        // Tạo manifest inline
+        const manifestData = {
+            name: "Theo dõi dưa chuột",
+            short_name: "DuaChuot",
+            description: "Ứng dụng theo dõi dưa chuột hàng ngày",
+            start_url: "/",
+            display: "standalone",
+            background_color: "#ffffff",
+            theme_color: "#4CAF50",
+            icons: [
+                {
+                    src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjAiIGZpbGw9IiM0Q0FGNTASCJ8L3JlY3Q+Cjx0ZXh0IHg9Ijk2IiB5PSIxMjAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI4MCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfpZI8L3RleHQ+Cjwvc3ZnPgo=",
+                    sizes: "192x192",
+                    type: "image/svg+xml"
+                }
+            ]
+        };
 
-        window.addEventListener('offline', () => {
-            isOnline = false;
-            updateConnectionStatus();
-        });
+        const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+        const manifestUrl = URL.createObjectURL(manifestBlob);
+        document.getElementById('manifest-placeholder').href = manifestUrl;
 
-        // Chuyển tab
+        // Chức năng chính
+        function calculateValue() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const price = parseFloat(document.getElementById('price').value);
+
+            if (!weight || !price) {
+                showStatus('Vui lòng nhập đầy đủ thông tin!', 'error');
+                return;
+            }
+
+            const total = weight * price;
+            
+            currentData = {
+                weight: weight,
+                price: price,
+                total: total,
+                notes: document.getElementById('notes').value
+            };
+
+            document.getElementById('result').innerHTML = `
+                <div>Số kg: ${weight} kg</div>
+                <div>Giá: ${price.toLocaleString('vi-VN')} VNĐ/kg</div>
+                <div style="font-size: 24px; margin-top: 10px;">
+                    Thành tiền: ${total.toLocaleString('vi-VN')} VNĐ
+                </div>
+            `;
+            
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('saveBtn').style.display = 'block';
+        }
+
+        function saveData() {
+            if (!currentData.weight || !currentData.price) {
+                showStatus('Chưa có dữ liệu để lưu!', 'error');
+                return;
+            }
+
+            const record = {
+                date: new Date().toISOString().split('T')[0],
+                timestamp: new Date().toISOString(),
+                weight: currentData.weight,
+                price: currentData.price,
+                total: currentData.total,
+                notes: currentData.notes
+            };
+
+            // Lưu vào localStorage trước
+            saveToLocalStorage(record);
+
+            // Thử gửi lên Google Sheets
+            if (navigator.onLine) {
+                sendToGoogleSheets(record);
+            } else {
+                showStatus('Dữ liệu đã lưu offline. Sẽ đồng bộ khi có mạng.', 'warning');
+            }
+
+            // Reset form
+            document.getElementById('cucumberForm').reset();
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('saveBtn').style.display = 'none';
+            currentData = {};
+        }
+
+        function saveToLocalStorage(record) {
+            let data = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '[]');
+            data.push(record);
+            localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(data));
+            showStatus('Dữ liệu đã lưu thành công!', 'success');
+            loadHistory();
+            updateSummary();
+        }
+
+        function sendToGoogleSheets(record) {
+            if (!CONFIG.GOOGLE_SCRIPT_URL) {
+                showStatus('Chưa cấu hình Google Apps Script URL!', 'warning');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('date', record.date);
+            formData.append('weight', record.weight);
+            formData.append('price', record.price);
+            formData.append('total', record.total);
+            formData.append('notes', record.notes);
+
+            fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showStatus('Đã đồng bộ lên Google Sheets!', 'success');
+                } else {
+                    showStatus('Lỗi đồng bộ: ' + (data.error || 'Unknown error'), 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showStatus('Lỗi kết nối. Dữ liệu đã lưu offline.', 'warning');
+            });
+        }
+
+        function syncData() {
+            if (!navigator.onLine) {
+                showStatus('Không có kết nối mạng!', 'error');
+                return;
+            }
+
+            if (!CONFIG.GOOGLE_SCRIPT_URL) {
+                showStatus('Chưa cấu hình Google Apps Script URL!', 'warning');
+                return;
+            }
+
+            const data = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '[]');
+            if (data.length === 0) {
+                showStatus('Không có dữ liệu cần đồng bộ!', 'warning');
+                return;
+            }
+
+            showStatus('Đang đồng bộ dữ liệu...', 'warning');
+            
+            // Đồng bộ từng bản ghi
+            let syncCount = 0;
+            data.forEach((record, index) => {
+                setTimeout(() => {
+                    sendToGoogleSheets(record);
+                    syncCount++;
+                    if (syncCount === data.length) {
+                        showStatus(`Đã đồng bộ ${data.length} bản ghi!`, 'success');
+                    }
+                }, index * 500); // Delay 500ms giữa các request
+            });
+        }
+
+        function loadHistory() {
+            const data = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '[]');
+            const historyList = document.getElementById('historyList');
+            
+            if (data.length === 0) {
+                historyList.innerHTML = '<p>Chưa có dữ liệu nào.</p>';
+                return;
+            }
+
+            historyList.innerHTML = data
+                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                .map(record => `
+                    <div class="history-item">
+                        <div><strong>📅 ${record.date}</strong></div>
+                        <div>🥒 ${record.weight} kg × ${record.price.toLocaleString('vi-VN')} VNĐ</div>
+                        <div><strong>💰 ${record.total.toLocaleString('vi-VN')} VNĐ</strong></div>
+                        ${record.notes ? `<div>📝 ${record.notes}</div>` : ''}
+                    </div>
+                `).join('');
+        }
+
+        function updateSummary() {
+            const data = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '[]');
+            const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
+            
+            const monthlyData = data.filter(record => 
+                record.date.startsWith(currentMonth)
+            );
+
+            const totalKg = monthlyData.reduce((sum, record) => sum + record.weight, 0);
+            const totalMoney = monthlyData.reduce((sum, record) => sum + record.total, 0);
+
+            document.getElementById('monthlyKg').textContent = totalKg.toFixed(1);
+            document.getElementById('monthlyMoney').textContent = totalMoney.toLocaleString('vi-VN');
+        }
+
         function switchTab(tabName) {
             // Ẩn tất cả tab content
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            // Bỏ active cho tất cả tab
-            document.querySelectorAll('.tab').forEach(tab => {
+            // Bỏ active khỏi tất cả nav-tab
+            document.querySelectorAll('.nav-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            // Hiện tab được chọn
-            document.getElementById(tabName + 'Tab').classList.add('active');
+            // Hiển thị tab được chọn
+            document.getElementById(tabName + '-tab').classList.add('active');
             event.target.classList.add('active');
             
-            // Cập nhật dữ liệu cho tab
+            // Load dữ liệu cho tab
             if (tabName === 'history') {
                 loadHistory();
             } else if (tabName === 'summary') {
-                loadSummary();
+                updateSummary();
+            } else if (tabName === 'data') {
+                loadDataTab();
+            } else if (tabName === 'settings') {
+                loadSettingsTab();
             }
         }
 
-        // Tính toán giá trị
-        function calculateValue() {
-            const weight = parseFloat(document.getElementById('weight').value);
-            const price = parseFloat(document.getElementById('price').value);
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.className = `status ${type}`;
+            status.textContent = message;
+            status.style.display = 'block';
             
-            if (!weight || !price) {
-                alert('Vui lòng nhập đầy đủ thông tin!');
-                return;
-            }
-            
-            const total = weight * price;
-            document.getElementById('resultValue').textContent = formatCurrency(total);
-            document.getElementById('result').style.display = 'block';
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
         }
 
-        // Lưu dữ liệu
-        function saveData() {
-            const weight = parseFloat(document.getElementById('weight').value);
-            const price = parseFloat(document.getElementById('price').value);
-            const date = document.getElementById('date').value;
-            const note = document.getElementById('note').value;
+        // Xử lý trạng thái online/offline
+        window.addEventListener('online', () => {
+            document.getElementById('offlineIndicator').style.display = 'none';
+            showStatus('Đã kết nối mạng!', 'success');
+        });
+
+        window.addEventListener('offline', () => {
+            document.getElementById('offlineIndicator').style.display = 'block';
+            showStatus('Mất kết nối. Dữ liệu sẽ lưu offline.', 'warning');
+        });
+
+        // Khởi tạo khi load trang
+        window.addEventListener('load', () => {
+            loadHistory();
+            updateSummary();
             
-            if (!weight || !price || !date) {
-                alert('Vui lòng nhập đầy đủ thông tin!');
+            if (!navigator.onLine) {
+                document.getElementById('offlineIndicator').style.display = 'block';
+            }
+        });
+
+        // Thêm khả năng install PWA
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Hiển thị nút install
+            document.getElementById('installBtn').style.display = 'block';
+            document.getElementById('pwaStatus').textContent = 'Có thể cài đặt';
+        });
+
+        // Các hàm mới cho tab Dữ liệu và Cài đặt
+        function loadDataTab() {
+            const data = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '[]');
+            
+            // Cập nhật tổng quan
+            const totalRecords = data.length;
+            const totalKg = data.reduce((sum, record) => sum + record.weight, 0);
+            const totalRevenue = data.reduce((sum, record) => sum + record.total, 0);
+            const avgPrice = totalKg > 0 ? totalRevenue / totalKg : 0;
+
+            document.getElementById('totalRecords').textContent = totalRecords;
+            document.getElementById('totalKg').textContent = totalKg.toFixed(1);
+            document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString('vi-VN');
+            document.getElementById('avgPrice').textContent = avgPrice.toFixed(0);
+
+            // Hiển thị dữ liệu JSON
+            document.getElementById('rawDataView').value = JSON.stringify(data, null, 2);
+        }
+
+        function loadSettingsTab() {
+            // Load URL đã lưu
+            const savedUrl = localStorage.getItem('googleScriptUrl');
+            if (savedUrl) {
+                document.getElementById('googleScriptUrl').value = savedUrl;
+            }
+
+            // Cập nhật trạng thái
+            document.getElementById('connectionStatus').textContent = navigator.onLine ? 'Online' : 'Offline';
+            
+            const data = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '[]');
+            document.getElementById('offlineCount').textContent = data.length;
+        }
+
+        function saveSettings() {
+            const url = document.getElementById('googleScriptUrl').value.trim();
+            
+            if (!url) {
+                showStatus('Vui lòng nhập URL Google Apps Script!', 'error');
                 return;
             }
+
+            if (!url.includes('script.google.com')) {
+                showStatus('URL không hợp lệ! Phải là URL của Google Apps Script.', 'error');
+                return;
+            }
+
+            localStorage.setItem('googleScriptUrl', url);
+            CONFIG.GOOGLE_SCRIPT_URL = url;
             
-            const data = {
-                date: date,
-                weight: weight,
-                price: price,
-                total: weight * price,
-                note: note,
-                timestamp: new Date().getTime(),
-                synced: false
+            showStatus('Đã lưu cài đặt thành công!', 'success');
+        }
+
+        function testConnection() {
+            const url = document.getElementById('googleScriptUrl').value.trim();
+            
+            if (!url) {
+                showStatus('Vui lòng nhập URL trước khi test!', 'error');
+                return;
+            }
+
+            showStatus('Đang kiểm tra kết nối...', 'warning');
+
+            const formData = new FormData();
+            formData.append('test', 'true');
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                showStatus('Kết nối thành công! ✅', 'success');
+            })
+            .catch(error => {
+                showStatus('Kết nối thất bại! Kiểm tra lại URL và script. ❌', 'error');
+                console.error('Connection test failed:', error);
+            });
+        }
+
+        function exportToCSV() {
+            const data = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '[]');
+            
+            if (data.length === 0) {
+                showStatus('Không có dữ liệu để xuất!', 'warning');
+                return;
+            }
+
+            let csv = 'Ngày,Số kg,Giá/kg,Thành tiền,Ghi chú\n';
+            data.forEach(record => {
+                csv += `${record.date},${record.weight},${record.price},${record.total},"${record.notes}"\n`;
+            });
+
+            downloadFile(csv, 'du_lieu_dua_chuot.csv', 'text/csv');
+            showStatus('Đã xuất CSV thành công!', 'success');
+        }
+
+        function exportToJSON() {
+            const data = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '[]');
+            
+            if (data.length === 0) {
+                showStatus('Không có dữ liệu để xuất!', 'warning');
+                return;
+            }
+
+            const jsonStr = JSON.stringify(data, null, 2);
+            downloadFile(jsonStr, 'du_lieu_dua_chuot.json', 'application/json');
+            showStatus('Đã xuất JSON thành công!', 'success');
+        }
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type: type });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importData() {
+            const fileInput = document.getElementById('importFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                showStatus('Vui lòng chọn file để nhập!', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    let importedData;
+                    
+                    if (file.name.endsWith('.json')) {
+                        importedData = JSON.parse(e.target.result);
+                    } else if (file.name.endsWith('.csv')) {
+                        // Xử lý CSV đơn giản
+                        const lines = e.target.result.split('\n');
+                        importedData = [];
+                        
+                        for (let i = 1; i < lines.length; i++) {
+                            const line = lines[i].trim();
+                            if (line) {
+                                const [date, weight, price, total, notes] = line.split(',');
+                                importedData.push({
+                                    date: date,
+                                    timestamp: new Date(date).toISOString(),
+                                    weight: parseFloat(weight),
+                                    price: parseFloat(price),
+                                    total: parseFloat(total),
+                                    notes: notes ? notes.replace(/"/g, '') : ''
+                                });
+                            }
+                        }
+                    }
+
+                    if (importedData && importedData.length > 0) {
+                        const existingData = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '[]');
+                        const mergedData = [...existingData, ...importedData];
+                        localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(mergedData));
+                        
+                        showStatus(`Đã nhập ${importedData.length} bản ghi!`, 'success');
+                        loadDataTab();
+                        loadHistory();
+                        updateSummary();
+                    } else {
+                        showStatus('File không chứa dữ liệu hợp lệ!', 'error');
+                    }
+                } catch (error) {
+                    showStatus('Lỗi đọc file: ' + error.message, 'error');
+                }
             };
             
-            // Lưu vào localStorage
-            saveToLocalStorage(data);
-            
-            // Hiển thị loading
-            document.getElementById('loading').style.display = 'block';
-            
-            // Thử đồng bộ lên Google Sheets (mô phỏng)
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-                
-                if (isOnline) {
-                    // Mô phỏng gửi lên Google Sheets thành công
-                    data.synced = true;
-                    updateLocalStorageItem(data);
-                    document.getElementById('lastSync').textContent = 'Đồng bộ: ' + new Date().toLocaleTimeString();
-                    alert('Đã lưu và đồng bộ thành công!');
-                } else {
-                    alert('Đã lưu offline. Sẽ đồng bộ khi có kết nối!');
+            reader.readAsText(file);
+        }
+
+        function clearAllData() {
+            if (confirm('⚠️ CẢNH BÁO: Bạn có chắc muốn xóa TẤT CẢ dữ liệu?\n\nHành động này KHÔNG THỂ hoàn tác!')) {
+                if (confirm('Xác nhận lần 2: Xóa tất cả dữ liệu?')) {
+                    localStorage.removeItem(CONFIG.STORAGE_KEY);
+                    showStatus('Đã xóa tất cả dữ liệu!', 'success');
+                    loadDataTab();
+                    loadHistory();
+                    updateSummary();
                 }
-                
-                // Reset form
-                document.getElementById('cucumberForm').reset();
-                document.getElementById('date').valueAsDate = new Date();
-                document.getElementById('result').style.display = 'none';
-                
-            }, 2000);
-        }
-
-        // Lưu vào localStorage
-        function saveToLocalStorage(data) {
-            let savedData = JSON.parse(localStorage.getItem('cucumberData') || '[]');
-            savedData.push(data);
-            localStorage.setItem('cucumberData', JSON.stringify(savedData));
-            currentData = savedData;
-        }
-
-        // Cập nhật item trong localStorage
-        function updateLocalStorageItem(data) {
-            let savedData = JSON.parse(localStorage.getItem('cucumberData') || '[]');
-            const index = savedData.findIndex(item => item.timestamp === data.timestamp);
-            if (index !== -1) {
-                savedData[index] = data;
-                localStorage.setItem('cucumberData', JSON.stringify(savedData));
-                currentData = savedData;
             }
         }
 
-        // Đồng bộ dữ liệu offline
-        function syncOfflineData() {
-            const unsyncedData = currentData.filter(item => !item.synced);
-            if (unsyncedData.length > 0) {
-                // Mô phỏng đồng bộ
-                console.log('Đồng bộ', unsyncedData.length, 'bản ghi...');
-                // Trong thực tế, sẽ gửi API đến Google Apps Script
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        showStatus('Ứng dụng đã được cài đặt!', 'success');
+                        document.getElementById('pwaStatus').textContent = 'Đã cài đặt';
+                    }
+                    deferredPrompt = null;
+                    document.getElementById('installBtn').style.display = 'none';
+                });
             }
         }
-
-        // Tải lịch sử
-        function loadHistory() {
-            const savedData = JSON.parse(localStorage.getItem('cucumberData') || '[]');
-            const historyList = document.getElementById('historyList');
-            
-            if (savedData.length === 0) {
-                historyList.innerHTML = '<p style="text-align: center; color: #6b7280; padding: 20px;">Chưa có dữ liệu nào</p>';
-                return;
-            }
-            
-            // Sắp xếp theo ngày mới nhất
-            savedData.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            historyList.innerHTML = savedData.map(item => `
-                <div class="history-item">
-                    <div>
-                        <div class="history-date">${formatDate(item.date)}</div>
-                        <div class="history-weight">${item.weight}kg × ${formatCurrency(item.price)}/kg</div>
-                        ${item.note ? `<div style="font-size: 0.8rem; color: #9ca3af;">${item.note}</div>` : ''}
-                    </div>
-                    <div class="history-details">
-                        <div class="history-value">${formatCurrency(item.total)}</div>
-                        ${!item.synced ? '<div style="font-size: 0.7rem; color: #ef4444;">⏳ Chưa đồng bộ</div>' : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Tải tổng hợp
-        function loadSummary() {
-            const savedData = JSON.parse(localStorage.getItem('cucumberData') || '[]');
-            const currentMonth = new Date().getMonth();
-            const currentYear = new Date().getFullYear();
-            
-            const monthData = savedData.filter(item => {
-                const itemDate = new Date(item.date);
-                return itemDate.getMonth() === currentMonth && itemDate.getFullYear() === currentYear;
-            });
-            
-            const totalWeight = monthData.reduce((sum, item) => sum + item.weight, 0);
-            const totalValue = monthData.reduce((sum, item) => sum + item.total, 0);
-            const avgPrice = totalWeight > 0 ? totalValue / totalWeight : 0;
-            const totalDays = monthData.length;
-            
-            document.getElementById('totalWeight').textContent = totalWeight.toFixed(1);
-            document.getElementById('totalValue').textContent = formatNumber(totalValue);
-            document.getElementById('avgPrice').textContent = formatNumber(avgPrice);
-            document.getElementById('totalDays').textContent = totalDays;
-        }
-
-        // Định dạng tiền tệ
-        function formatCurrency(amount) {
-            return new Intl.NumberFormat('vi-VN').format(amount) + ' VNĐ';
-        }
-
-        // Định dạng số
-        function formatNumber(number) {
-            return new Intl.NumberFormat('vi-VN').format(Math.round(number));
-        }
-
-        // Định dạng ngày
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('vi-VN');
-        }
-
-        // Khởi tạo app
-        function initApp() {
-            currentData = JSON.parse(localStorage.getItem('cucumberData') || '[]');
-            updateConnectionStatus();
-            
-            // Tự động tính toán khi nhập
-            document.getElementById('weight').addEventListener('input', () => {
-                const weight = document.getElementById('weight').value;
-                const price = document.getElementById('price').value;
-                if (weight && price) {
-                    calculateValue();
-                }
-            });
-            
-            document.getElementById('price').addEventListener('input', () => {
-                const weight = document.getElementById('weight').value;
-                const price = document.getElementById('price').value;
-                if (weight && price) {
-                    calculateValue();
-                }
-            });
-        }
-
-        // Khởi chạy app
-        initApp();
     </script>
 </body>
 </html>
